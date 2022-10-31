@@ -1,10 +1,16 @@
 
+import { useContext } from 'react';
+import CartContext from '../../store/cart-context';
 import Modal from '../UI/Modal';
 import classes from './Cart.module.css';
+
 const Cart = () => {
+    cartCtx = useContext(CartContext);
+    const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+    const hasItems = cartCtx.items.length > 0;
     const cartitems = 
     <ul className={classes['cart-items']}>{
-    [{id:'c1',name:'sushi',price:200,amount:2}].map(
+         cartCtx.items.map(
         (item) => <li>{item.name}</li>
     ) }</ul>
 
@@ -13,13 +19,16 @@ const Cart = () => {
         {cartitems}
         <div className={classes.total}>
             <span>Total Amount</span>
-            <span>35.45</span>
+            <span>{totalAmount}</span>
         </div>
         <div className={classes.actions}>
             <button className={classes['button--alt']} onClick={props.onClose}>Close</button>
-            <button className={classes.button}>Order </button>
+           {hasItems && <button className={classes.button}>Order </button>}
         </div>
         </Modal>
     )
 }
 export default Cart;
+
+//https://swapi.dev/
+//https://swapi.py4e.com/
